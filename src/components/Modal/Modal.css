@@ -1,0 +1,46 @@
+.modal__container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.397);
+}
+
+.modal__card {
+    background-color: white;
+    width: 70%;
+    border-radius: 10px;
+}
+
+.card__header {
+    display: flex;
+    background-color: blueviolet;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    border-start-start-radius: 10px;
+    border-start-end-radius: 10px;
+}
+
+.card__content {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.card__button button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
