@@ -15,7 +15,6 @@ function App() {
   };
   return (
     <div className="App">
-      
       <NewUser onAddUser={addUserHandler} />
       <Result users={users} />
     </div>

@@ -1,33 +1,29 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Modal from "../Modal/Modal";
 import Button from "../UI/Button";
 import "./NewUser.css";
 
 const NewUser = (props) => {
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
   const [modal, setModal] = useState();
-
-  const updateUsername = (e) => {
-    setEnteredUsername(e.target.value);
-  };
-  const updateAge = (e) => {
-    setEnteredAge(e.target.value);
-  };
 
   const closeModalHandler = () => {
     setModal(null);
   };
   const submitForm = (e) => {
     e.preventDefault();
-    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+    const username = nameInputRef.current.value;
+    const age = ageInputRef.current.value;
+
+    if (username.trim().length === 0 || age.trim().length === 0) {
       setModal({
         title: "Invalid Input",
         msg: "Please enter a valid name and age (non-empty values).",
       });
       return;
     }
-    if (+enteredAge <= 0) {
+    if (+age <= 0) {
       setModal({
         title: "An error occured",
         msg: "Please enter a valid age (>0).",
@@ -36,43 +32,34 @@ const NewUser = (props) => {
     }
     const userDetails = {
       id: Math.random().toString(),
-      username: enteredUsername,
-      age: +enteredAge,
+      username: username,
+      age: +age,
     };
 
     props.onAddUser(userDetails);
-
-    setEnteredUsername("");
-    setEnteredAge("");
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
   };
 
   return (
-    <div className="new-user__container">
+    <React.Fragment>
       {modal && <Modal modal={modal} onClose={closeModalHandler} />}
-      <form onSubmit={submitForm}>
-        <div className="new-user__input">
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            value={enteredUsername}
-            onChange={updateUsername}
-            type="text"
-          />
-        </div>
-        <div className="new-user__input">
-          <label htmlFor="age">Age (Years)</label>
-          <input
-            id="age"
-            value={enteredAge}
-            onChange={updateAge}
-            type="number"
-          />
-        </div>
-        <div className="new-user__button">
-          <Button type="submit">Add User</Button>
-        </div>
-      </form>
-    </div>
+      <div className="new-user__container">
+        <form onSubmit={submitForm}>
+          <div className="new-user__input">
+            <label htmlFor="username">Username</label>
+            <input id="username" ref={nameInputRef} type="text" />
+          </div>
+          <div className="new-user__input">
+            <label htmlFor="age">Age (Years)</label>
+            <input id="age" ref={ageInputRef} type="number" />
+          </div>
+          <div className="new-user__button">
+            <Button type="submit">Add User</Button>
+          </div>
+        </form>
+      </div>
+    </React.Fragment>
   );
 };
 
